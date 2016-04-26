@@ -8,7 +8,7 @@ class Product
     @title = options[:title]
     @price = options[:price]
     @stock = options[:stock]
- 
+  
     if !find_item
       add_to_product
     else
@@ -24,13 +24,25 @@ class Product
   return false
   end
   
-  #def in_stock
-  #  if 
-  #end
+  #Question why iam not able to use find_item function in self.find_by_title
+  #error: NameError: undefined local variable or method `find_item' for Product:Class
+  def self.find_by_title(title)
+    @@products.each {|x| if x.title == title
+                            return x
+                         end}
+    
+    #if output==0
+    raise FindByTitleProductError, "#{title} can't find in Product List"
+  end
   
-  #def find_by_title
-  #  
-  #end
+  def in_stock?
+    if (@stock == nil) or (@stock == 0)
+      return false
+    else
+      return true
+    end 
+  end
+  
   
   def self.all
     @@products

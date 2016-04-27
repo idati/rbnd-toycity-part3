@@ -3,7 +3,8 @@
 class Product
   attr_reader :title,:price,:stock
   @@products = []
-
+  @@run_first_customer=true
+  
   def initialize(options={})
     @title = options[:title]
     @price = options[:price]
@@ -43,6 +44,24 @@ class Product
     end 
   end
   
+  def self.in_stock
+    products_stock_more_zero=[]
+    @@products.each {|x| if x.in_stock?
+                         products_stock_more_zero << x
+                         end}
+             
+    return products_stock_more_zero
+                         
+  end
+  
+  def include?(item)
+    @@products_stock_more_zero.each {|x| if x == item
+                                            return true
+                                          else
+                                            return false
+                                          end
+                                            }
+  end
   
   def self.all
     @@products
@@ -51,5 +70,13 @@ class Product
   private
   def add_to_product
         @@products << self
+  end
+  
+  private
+  def run_first_time
+    if @@run_first_customer==true
+      @@products=[]
+      @@run_first_customer=false
+    end
   end
 end

@@ -1,0 +1,15 @@
+How long did you spend working on this project
+10 hours
+
+What was the most rewarding challenge you conquered
+it was definitely the topic Inheritance, can do very complex interleaves -
+cannot see the wood for the trees - but on the other hand you its so easy and quick to use - love it :)
+...and GIT
+
+What two additional features did you build Why
+added "A way for customers to return items" and "Better ways to find transactions" because these are
+my experiences in work - that would be very helpful in daily live.
+
+Where do you still have room to grow
+good question, i am at the beginning of my "ruby journey" but in the end i would like to say,
+"I learned how to write complex software in an efficient way"

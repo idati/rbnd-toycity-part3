@@ -1,14 +1,11 @@
 require_relative "product"
+
 class Customer < Product
   
   def initialize(options={})
     @title = options[:name]
     #@price = options[:price]
     #@stock = options[:stock]
-    
-    if @@run_first_customer==true
-      run_first_time
-    end
     
     if !find_item
       add_to_product
@@ -37,12 +34,5 @@ class Customer < Product
     @title
   end
 
-    private
-  def run_first_time
-    if @@run_first_customer==true
-      #@@products=[]
-      @@run_first_customer=false
-    end
-  end
-  
+
 end

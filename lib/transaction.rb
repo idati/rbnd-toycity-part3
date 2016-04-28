@@ -1,9 +1,11 @@
 require_relative "customer"
 require_relative "product"
+
 class Transaction < Customer;Product
   attr_reader :customer,:product,:id
   @@transaction=[]
   @@all_id=0
+
   def initialize(customer, product)
     @customer = customer
     @product = product
@@ -20,9 +22,10 @@ class Transaction < Customer;Product
     @@transaction
   end
   
-  private 
-  def add_transaction
-    @@transaction << self
+  def self.find_all_bought_products_from_customer(customer)
+    @@transaction.each{|x| if x.customer.name==customer
+                           puts x.product.title 
+                           end}
   end
   
   def self.find(id_number)
@@ -30,7 +33,14 @@ class Transaction < Customer;Product
                               return x
                             end}
   end
- 
+   def self.all
+    @@transaction
+  end
+
+  private 
+  def add_transaction
+    @@transaction << self
+  end
   
   private
   def reduce_stock
@@ -38,11 +48,7 @@ class Transaction < Customer;Product
     #puts Customer.all.inspect
     @product.reduce_stock
   end
-  
-  def self.all
-    @@transaction
-  end
-  
+ 
   private
   def increase_id
     @@all_id+=1

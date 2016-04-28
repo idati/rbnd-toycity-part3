@@ -1,6 +1,5 @@
-# product.rb
-
 class Product
+
   attr_reader :title,:price,:stock
   @@products = []
   @@run_first_customer=true
@@ -35,9 +34,6 @@ class Product
   return false
   end
   
-  
-  #Question why iam not able to use find_item function in self.find_by_title
-  #error: NameError: undefined local variable or method `find_item' for Product:Class
   def self.find_by_title(title)
     @@products.each {|x| if x.title == title
                             return x

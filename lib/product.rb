@@ -18,10 +18,16 @@ class Product
     end 
   end
   
+
   def reduce_stock
-    @stock -=1
+    if @stock > 0
+      @stock -=1
+    else 
+      raise OutOfStockError, "Transaction error for product#{@title}, reason: number of stock: #{@stock}"
+    end
   end
 
+  
   def find_item
   @@products.each{|x| if x.title==@title
                         return true
@@ -29,16 +35,16 @@ class Product
   return false
   end
   
+  
   #Question why iam not able to use find_item function in self.find_by_title
   #error: NameError: undefined local variable or method `find_item' for Product:Class
   def self.find_by_title(title)
     @@products.each {|x| if x.title == title
                             return x
                          end}
-    
-    #if output==0
     raise FindByTitleProductError, "#{title} can't find in Product List"
   end
+  
   
   def in_stock?
     if (@stock == nil) or (@stock == 0)
@@ -48,26 +54,6 @@ class Product
     end 
   end
   
-  def transacion_done
-    puts "try this"
-    if find_item
-      
-    end
-#    @@products_stock_more_zero.each {|x| if x.title == title
-#                                            puts x.stock
-#                                         end}
-#  Product.in_stock
-  end
-  
-  def self.in_stock
-    @@products_stock_more_zero=[]
-    @@products.each {|x| if x.in_stock?
-                         @@products_stock_more_zero << x
-                         end}
-             
-    return @@products_stock_more_zero
-                         
-  end
   
   def include?(item)
     @@products_stock_more_zero.each {|x| if x == item
@@ -77,6 +63,18 @@ class Product
                                           end
                                             }
   end
+
+
+    def self.in_stock
+    @@products_stock_more_zero=[]
+    @@products.each {|x| if x.in_stock?
+                         @@products_stock_more_zero << x
+                         end}
+             
+    return @@products_stock_more_zero
+                         
+  end
+
   
   def self.all
     tmp=[]
@@ -85,6 +83,7 @@ class Product
       end}
     return tmp
   end
+  
   
   private
   def add_to_product

@@ -46,6 +46,7 @@ puts walter.name # Should return "Walter Latimer"
 # TRANSACTIONS
 
  transaction = Transaction.new(walter, nanoblock)
+ #transaction2 = Transaction.new(walter, firehouse)
 #puts transaction.all.inspect
 #puts transaction.customer.name
  puts transaction.id # Should return 1

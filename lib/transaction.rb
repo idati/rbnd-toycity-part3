@@ -20,11 +20,11 @@ class Transaction < Customer;Product
   def add_transaction
     @@transaction << self
   end
+  
   private
   def reduce_stock
     #puts Product.all.inspect
     #puts Customer.all.inspect
     @product.reduce_stock
-    #Product.find_by_title(@product.title).stock = Product.find_by_title(@product.title).stock-1
   end
 end

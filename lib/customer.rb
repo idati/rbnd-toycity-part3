@@ -29,6 +29,10 @@ class Customer < Product
     return tmp
   end
   
+  def purchase(product_item)
+    Transaction.new(self,product_item)
+  end
+  
   def name
     @title
   end

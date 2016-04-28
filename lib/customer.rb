@@ -21,8 +21,24 @@ class Customer < Product
     self.find_by_title(name)
   end
   
+  def self.all
+    tmp=[]
+    @@products.each{|x| if x.class==Customer
+                        tmp<<x
+      end}
+    return tmp
+  end
+  
   def name
     @title
   end
 
+    private
+  def run_first_time
+    if @@run_first_customer==true
+      #@@products=[]
+      @@run_first_customer=false
+    end
+  end
+  
 end

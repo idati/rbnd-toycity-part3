@@ -4,6 +4,7 @@ class Product
   attr_reader :title,:price,:stock
   @@products = []
   @@run_first_customer=true
+  @@products_stock_more_zero=[]
   
   def initialize(options={})
     @title = options[:title]
@@ -14,8 +15,11 @@ class Product
       add_to_product
     else
       raise DuplicateProductError, "#{@title} already exists."
-    end
- 
+    end 
+  end
+  
+  def reduce_stock
+    @stock -=1
   end
 
   def find_item
@@ -44,13 +48,24 @@ class Product
     end 
   end
   
+  def transacion_done
+    puts "try this"
+    if find_item
+      
+    end
+#    @@products_stock_more_zero.each {|x| if x.title == title
+#                                            puts x.stock
+#                                         end}
+#  Product.in_stock
+  end
+  
   def self.in_stock
-    products_stock_more_zero=[]
+    @@products_stock_more_zero=[]
     @@products.each {|x| if x.in_stock?
-                         products_stock_more_zero << x
+                         @@products_stock_more_zero << x
                          end}
              
-    return products_stock_more_zero
+    return @@products_stock_more_zero
                          
   end
   
@@ -64,7 +79,11 @@ class Product
   end
   
   def self.all
-    @@products
+    tmp=[]
+    @@products.each{|x| if x.class==Product
+                        tmp<<x
+      end}
+    return tmp
   end
   
   private
@@ -72,11 +91,4 @@ class Product
         @@products << self
   end
   
-  private
-  def run_first_time
-    if @@run_first_customer==true
-      @@products=[]
-      @@run_first_customer=false
-    end
-  end
 end

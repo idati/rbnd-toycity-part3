@@ -7,3 +7,7 @@ end
 class FindByTitleProductError < StandardError
   
 end
+
+class OutOfStockError < StandardError
+  
+end

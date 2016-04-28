@@ -12,6 +12,9 @@ class Transaction < Customer;Product
     reduce_stock
   end
   
+  def bring_return
+    @@transaction.delete_at(self.id-1)
+  end
   
   def all
     @@transaction
@@ -27,6 +30,7 @@ class Transaction < Customer;Product
                               return x
                             end}
   end
+ 
   
   private
   def reduce_stock

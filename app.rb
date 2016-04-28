@@ -64,5 +64,14 @@ puts walter.name # Should return "Walter Latimer"
  transaction2 = Transaction.find(2)
  puts transaction2.product == nanoblock # Should return true
 
+#A way for customers to return items, using the id
+puts Transaction.all.inspect
+puts Transaction.all.count
+Transaction.find(2).bring_return
+puts Transaction.all.count
+puts Transaction.all.inspect
+
  walter.purchase(firehouse)
 # Should return OutOfStockError: 'LEGO Firehouse Headquarter' is out of stock.
+
+

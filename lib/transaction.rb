@@ -1,21 +1,26 @@
-require_relative "customer"
-require_relative "product"
 
-class Transaction < Customer;Product
+class Transaction 
+  
   attr_reader :customer,:product,:id
-  @@transaction=[]
+  
+  @@transaction=[]  
   @@all_id=0
 
   def initialize(customer, product)
     @customer = customer
     @product = product
-    @id=increase_id
-    add_transaction
-    reduce_stock
+    if @product.stock > 0
+      @id=increase_id   #@id_all+1
+      add_transaction   #add transaction
+      reduce_stock      #reduce stock
+    else
+      raise OutOfStockError, "Transaction error for product#{product.title}, reason: number of stock: #{product.stock}"
+    end
   end
   
   def bring_return
     @@transaction.delete_at(self.id-1)
+    reduce_id
   end
   
   def all
@@ -53,4 +58,10 @@ class Transaction < Customer;Product
   def increase_id
     @@all_id+=1
   end
+  
+  private 
+  def reduce_id
+    @@all_id-=1
+  end
+  
 end

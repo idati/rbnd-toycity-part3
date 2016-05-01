@@ -11,8 +11,7 @@ require_relative "lib/transaction"
  
  puts Product.all.count # Should return 3
 
-
-# Product.new(title: "LEGO Iron Man vs. Ultron", price: 22.99, stock: 55)
+#Product.new(title: "LEGO Iron Man vs. Ultron", price: 22.99, stock: 55)
 # Should return DuplicateProductError: 'LEGO Iron Man vs. Ultron' already exists.
 
 
@@ -34,18 +33,22 @@ require_relative "lib/transaction"
 
  Customer.new(name: "Walter Latimer")
  Customer.new(name: "Julia Van Cleve")
+# Customer.new(name: "Peter Trick")
  
  puts Customer.all.count # Should return 2
 # Customer.new(name: "Walter Latimer")
 # Should return DuplicateCustomerError: 'Walter Latimer' already exists.
 
  walter = Customer.find_by_name("Walter Latimer")
+# peter = Customer.find_by_name("Peter Trick")
+# julia = Customer.find_by_name("Julia Van Cleve")
 
 puts walter.name # Should return "Walter Latimer"
 
 # TRANSACTIONS
 
  transaction = Transaction.new(walter, nanoblock)
+# puts Transaction.all.inspect
  #transaction2 = Transaction.new(walter, firehouse)
 #puts transaction.all.inspect
 #puts transaction.customer.name
@@ -67,14 +70,25 @@ puts walter.name # Should return "Walter Latimer"
 #A way for customers to return items, using the id
 #puts Transaction.all.inspect
 #puts Transaction.all.count
+#Transaction.new(peter, nanoblock)
+puts Transaction.all.inspect
 Transaction.find(2).bring_return
+puts Transaction.all.length
+#Transaction.new(julia, nanoblock)
+#puts Transaction.all.length
+Transaction.find(1).bring_return
+Transaction.new(walter, nanoblock)
+Transaction.find(3).bring_return
+#Transaction.find(4).bring_return
+Transaction.new(walter, nanoblock)
 puts Transaction.all.count
 puts Transaction.all.inspect
 
 #Better ways to find transactions
 Transaction.find_all_bought_products_from_customer("Walter Latimer")
 
- walter.purchase(firehouse)
+#Transaction.new(walter, firehouse)
+walter.purchase(firehouse)
 # Should return OutOfStockError: 'LEGO Firehouse Headquarter' is out of stock.
 
 

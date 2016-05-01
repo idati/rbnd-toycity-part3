@@ -10,26 +10,18 @@ class Product
     @price = options[:price]
     @stock = options[:stock]
   
-    if !find_item
-      add_to_product
-    end 
+    add_to_product
   end
   
 
   def reduce_stock
-    if @stock > 0
       @stock -=1
-    else 
-      raise OutOfStockError, "Transaction error for product#{@title}, reason: number of stock: #{@stock}"
-    end
   end
 
   
   def find_item
-  @@products.each{|x| if x.title==@title
-                        return true
-                      end}
-  return false
+    @@products.any?{|item| item.title == @title}
+ 
   end
   
   def self.find_by_title(title)
@@ -44,16 +36,9 @@ class Product
     @stock > 0
   end
   
-  
-  def include?(item)
-    @@products_stock_more_zero.find{|array_item| array_item==item}
-  end
-
-
+ 
     def self.in_stock
-    @@products_stock_more_zero = @@products.select{|x| x.in_stock?}
-    return @@products_stock_more_zero
-                         
+    @@products_stock_more_zero = @@products.select{|item| item.in_stock?}                         
   end
 
   
@@ -64,7 +49,11 @@ class Product
   
   private
   def add_to_product
+    if !find_item
         @@products << self
+    else
+      raise DuplicateProductError, "#{@title} already exists."
+    end 
   end
   
 end

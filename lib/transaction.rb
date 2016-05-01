@@ -9,18 +9,26 @@ class Transaction
   def initialize(customer, product)
     @customer = customer
     @product = product
-    if @product.stock > 0
-      @id=increase_id   #@id_all+1
-      add_transaction   #add transaction
-      reduce_stock      #reduce stock
-    else
-      raise OutOfStockError, "Transaction error for product#{product.title}, reason: number of stock: #{product.stock}"
+    if check_stock 
+      @id=increase_id
+      add_transaction
+      reduce_stock
     end
+
+  end
+  
+  def check_stock
+    if @product.stock > 0
+    else
+      raise OutOfStockError, "Transaction error for product: #{product.title}, reason: number of stock: #{product.stock}"
+    end
+    return true
   end
   
   def bring_return
-    @@transaction.delete_at(self.id-1)
-    reduce_id
+    @@transaction.delete_at(find_index(self.id))
+    #delete this function to count all transaction, so each transaction is unique also when item returns
+    #reduce_id
   end
   
   def all
@@ -28,16 +36,23 @@ class Transaction
   end
   
   def self.find_all_bought_products_from_customer(customer)
-    @@transaction.each{|x| if x.customer.name==customer
-                           puts x.product.title 
+    @@transaction.each{|transaction| if transaction.customer.name==customer
+                           puts transaction.product.title 
                            end}
   end
   
   def self.find(id_number)
-    @@transaction.each {|x| if x.id == id_number
-                              return x
-                            end}
+#    @@transaction.each {|x| if x.id == id_number
+#                              return x
+#                            end}
+    @@transaction.find{|transaction|transaction.id == id_number}
   end
+
+  def find_index(id_number)
+    @@transaction.find_index {|transaction| transaction.id==id_number}
+  end
+  
+  
    def self.all
     @@transaction
   end
@@ -59,9 +74,5 @@ class Transaction
     @@all_id+=1
   end
   
-  private 
-  def reduce_id
-    @@all_id-=1
-  end
   
 end
